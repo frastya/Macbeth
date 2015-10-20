@@ -1,0 +1,79 @@
+<?php
+
+	$servername = "localhost";
+	$username = "root";
+	$password = "";
+	$db = "siswa";
+
+	//buat koneksi dengan mysql
+	$koneksi = new mysqli($servername, $username, $password, $db);
+	//check Koneksi
+	if ($koneksi->connect_error) {
+		die("connection Gagal: " .$koneksi->connect_error);
+	}
+	echo "Koneksi Suskses";
+	//Create Database
+	/*$sql = "CREATE DATABASE SISWA";
+	//Cek Apakah database siswa telah dibuat
+	if ($koneksi->query($sql) === TRUE) {
+		echo "Database Telah Dibuat";
+	}else {
+		echo "Gagal Membuat Database"; $koneksi->error;
+
+	}
+	*/
+
+	/*
+	//create Table
+	$sql = "CREATE TABLE SANTRI (
+		nis INT (6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+		nama VARCHAR (30) NOT NULL,
+		alamat VARCHAR(30) NOT NULL,
+		email VARCHAR (50)
+		)";
+
+		//Cek Apakah TABLE Santri telah dibuat
+		if ($koneksi->query($sql) === TRUE) {
+			echo "Table Santri Telah Dibuat";
+		}else {
+			echo "Gagal Membuat Table Santri"; $koneksi->error;
+		}
+	*/
+
+	/*	
+	//input Data ke Table Santri
+	$sql = "INSERT INTO SANTRI(nis, nama, ALAMAT, email)
+			VALUES('','FRASTYA Z INAYATULOH','CIANJUR','frastya@gmail.com'),
+			('','ELFAN ELMAN','CIKARANG','elfan@gmail.com'),
+			('','IKAMAL HAWASI','CIANJUR','hawasiikmala@gmail.com'),
+			('','ALDI ALFARIZI','SUKABUMI','belut@gmail.com'),
+			('','BAHRUL FIKRI','CIANJUR','abah@gmail.com')";
+
+			if ($koneksi->query($sql) === TRUE) {
+			echo "Data Telah Ditambahkan";
+			}else {
+			echo "Gagal Menambahkan Baris"; $koneksi->error;
+
+	}
+	*/
+
+	// prepare and bind
+	$stmt = $koneksi->prepare("INSERT INTO SANTRI (nis, nama, alamat, email) VALUES (?, ?, ?)");
+			$stmt->bind_param('sssd', $nis, $nama, $alamat, $email);
+
+			// set parameters and execute
+			$nis = "";
+			$nama = "FERDI";
+			$alamat = "RANCA EKEK";
+			$email =  "kumis@example.com";
+			$stmt->execute();
+
+			echo "berhasil di tambahkan";
+
+			$stmt->close();
+			$conn->close();
+
+	//Tutup Koneksi
+	$koneksi->close();
+
+?>
